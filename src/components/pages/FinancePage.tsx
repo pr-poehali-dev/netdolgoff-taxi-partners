@@ -12,7 +12,7 @@ const transactions = [
 ];
 
 const statusLabels: Record<string, { label: string; color: string }> = {
-  paid: { label: "Начислено", color: "text-nd-green bg-green-50" },
+  paid: { label: "Начислено", color: "text-nd-green bg-green-500/10" },
   pending: { label: "В обработке", color: "text-yellow-600 bg-yellow-50" },
   withdrawn: { label: "Выведено", color: "text-nd-muted bg-nd-card2" },
 };
@@ -66,13 +66,13 @@ export default function FinancePage({ onNavigate }: FinancePageProps) {
 
       {/* Monthly bonus */}
       <div className="px-4 mb-4">
-        <div className="bg-white nd-card-glow rounded-2xl p-4">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Icon name="Trophy" size={16} className="text-nd-yellow-dark" />
-              <p className="text-nd-dark font-semibold text-sm">Бонус месяца</p>
+              <p className="text-foreground font-semibold text-sm">Бонус месяца</p>
             </div>
-            <span className="status-badge text-nd-green bg-green-50">3/3 клиента</span>
+            <span className="status-badge text-nd-green bg-green-500/10">3/3 клиента</span>
           </div>
           <div className="bg-nd-card2 rounded-lg h-2.5 overflow-hidden mb-2">
             <div className="h-full nd-gradient rounded-lg w-full" />
@@ -93,13 +93,13 @@ export default function FinancePage({ onNavigate }: FinancePageProps) {
             <p className="text-nd-dark font-semibold text-sm">Следующий клиент</p>
             <p className="text-nd-dark/60 text-xs">4-й клиент принесёт</p>
           </div>
-          <p className="text-nd-yellow-dark font-black text-xl">+12 000 ₽</p>
+          <p className="text-nd-yellow-dark dark:text-nd-yellow font-black text-xl">+12 000 ₽</p>
         </div>
       </div>
 
       {/* Transactions */}
       <div className="px-4 mb-6">
-        <h2 className="text-nd-dark font-bold mb-3 flex items-center gap-2">
+        <h2 className="text-foreground font-bold mb-3 flex items-center gap-2">
           <Icon name="Receipt" size={16} className="text-nd-muted" />
           История начислений
         </h2>
@@ -107,12 +107,12 @@ export default function FinancePage({ onNavigate }: FinancePageProps) {
           {transactions.map((t) => {
             const st = statusLabels[t.status];
             return (
-              <div key={t.id} className="bg-white nd-card-glow rounded-2xl p-4 flex items-center gap-3">
+              <div key={t.id} className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-nd-card2 flex items-center justify-center flex-shrink-0">
                   <span className="text-nd-muted text-xs font-bold">#{t.num}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-nd-dark font-semibold text-sm">{t.client}</p>
+                  <p className="text-foreground font-semibold text-sm">{t.client}</p>
                   <p className="text-nd-muted text-xs">{t.date}</p>
                 </div>
                 <div className="text-right">

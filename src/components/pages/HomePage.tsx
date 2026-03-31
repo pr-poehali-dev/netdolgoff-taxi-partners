@@ -49,11 +49,11 @@ export default function HomePage({ onNavigate, userName }: HomePageProps) {
             { label: "Заработано", value: "33К ₽", icon: "TrendingUp" },
             { label: "К выводу", value: "21К ₽", icon: "Wallet" },
           ].map((s) => (
-            <div key={s.label} className="bg-white nd-card-glow rounded-2xl p-3 text-center">
+            <div key={s.label} className="bg-nd-card nd-card-glow rounded-2xl p-3 text-center">
               <div className="w-8 h-8 rounded-xl bg-nd-yellow-light flex items-center justify-center mx-auto mb-2">
                 <Icon name={s.icon} size={15} className="text-nd-yellow-dark" />
               </div>
-              <p className="text-nd-dark text-base font-black">{s.value}</p>
+              <p className="text-foreground text-base font-black">{s.value}</p>
               <p className="text-nd-muted text-[10px] mt-0.5">{s.label}</p>
             </div>
           ))}
@@ -62,8 +62,8 @@ export default function HomePage({ onNavigate, userName }: HomePageProps) {
 
       {/* Reward scale */}
       <div className="px-4 mb-4">
-        <div className="bg-white nd-card-glow rounded-2xl p-4">
-          <h2 className="text-nd-dark font-bold mb-3 flex items-center gap-2">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4">
+          <h2 className="text-foreground font-bold mb-3 flex items-center gap-2">
             <Icon name="Award" size={18} className="text-nd-yellow-dark" />
             Шкала вознаграждений
           </h2>
@@ -97,23 +97,23 @@ export default function HomePage({ onNavigate, userName }: HomePageProps) {
 
       {/* Quick actions */}
       <div className="px-4 mb-4">
-        <h2 className="text-nd-dark font-bold mb-3">Быстрые действия</h2>
+        <h2 className="text-foreground font-bold mb-3">Быстрые действия</h2>
         <div className="grid grid-cols-2 gap-3">
           {[
             { tab: "referral" as TabId, icon: "QrCode", label: "Мой QR-код", sub: "Поделиться с пассажиром", bg: "bg-nd-yellow-light", ic: "text-nd-yellow-dark" },
-            { tab: "finance" as TabId, icon: "CreditCard", label: "Вывести деньги", sub: "На вашу карту", bg: "bg-green-50", ic: "text-nd-green" },
-            { tab: "ai" as TabId, icon: "Bot", label: "ИИ-ассистент", sub: "Ответы на вопросы", bg: "bg-blue-50", ic: "text-blue-500" },
-            { tab: "chat" as TabId, icon: "MessageCircle", label: "Чат с куратором", sub: "Живой юрист", bg: "bg-purple-50", ic: "text-purple-500" },
+            { tab: "finance" as TabId, icon: "CreditCard", label: "Вывести деньги", sub: "На вашу карту", bg: "bg-green-500/10", ic: "text-nd-green" },
+            { tab: "ai" as TabId, icon: "Bot", label: "ИИ-ассистент", sub: "Ответы на вопросы", bg: "bg-blue-500/10", ic: "text-blue-500" },
+            { tab: "chat" as TabId, icon: "MessageCircle", label: "Чат с куратором", sub: "Живой юрист", bg: "bg-purple-500/10", ic: "text-purple-500" },
           ].map((item) => (
             <button
               key={item.tab}
               onClick={() => onNavigate(item.tab)}
-              className="bg-white nd-card-glow rounded-2xl p-4 text-left hover-scale"
+              className="bg-nd-card nd-card-glow rounded-2xl p-4 text-left hover-scale"
             >
               <div className={`w-10 h-10 rounded-xl ${item.bg} flex items-center justify-center mb-3`}>
                 <Icon name={item.icon} size={20} className={item.ic} />
               </div>
-              <p className="text-nd-dark font-semibold text-sm">{item.label}</p>
+              <p className="text-foreground font-semibold text-sm">{item.label}</p>
               <p className="text-nd-muted text-xs mt-0.5">{item.sub}</p>
             </button>
           ))}
@@ -122,14 +122,14 @@ export default function HomePage({ onNavigate, userName }: HomePageProps) {
 
       {/* How it works */}
       <div className="px-4 mb-4">
-        <h2 className="text-nd-dark font-bold mb-3">Как это работает</h2>
+        <h2 className="text-foreground font-bold mb-3">Как это работает</h2>
         <div className="space-y-2">
           {steps.map((s) => (
-            <div key={s.num} className="flex items-start gap-3 bg-white nd-card-glow rounded-xl p-3">
+            <div key={s.num} className="flex items-start gap-3 bg-nd-card nd-card-glow rounded-xl p-3">
               <div className="w-7 h-7 rounded-lg bg-nd-yellow flex items-center justify-center flex-shrink-0">
                 <span className="text-nd-dark text-xs font-black">{s.num}</span>
               </div>
-              <p className="text-nd-dark text-sm leading-snug pt-0.5">{s.text}</p>
+              <p className="text-foreground text-sm leading-snug pt-0.5">{s.text}</p>
             </div>
           ))}
         </div>

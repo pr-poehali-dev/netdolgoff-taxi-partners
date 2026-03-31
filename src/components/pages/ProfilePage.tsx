@@ -54,12 +54,12 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
 
       {/* Partner level */}
       <div className="px-4 -mt-2 mb-4 relative z-10">
-        <div className="bg-white nd-card-glow rounded-2xl p-4 flex items-center gap-3">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-nd-yellow-light flex items-center justify-center">
             <span className="text-xl">⭐</span>
           </div>
           <div className="flex-1">
-            <p className="text-nd-dark text-sm font-bold">Партнёр Серебро</p>
+            <p className="text-foreground text-sm font-bold">Партнёр Серебро</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex-1 bg-nd-card2 rounded-full h-1.5 overflow-hidden">
                 <div className="h-full nd-gradient rounded-full" style={{ width: "60%" }} />
@@ -78,9 +78,9 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
             { label: "Заработано", value: "33К ₽", icon: "TrendingUp" },
             { label: "Место в топе", value: "47", icon: "Trophy" },
           ].map((s) => (
-            <div key={s.label} className="bg-white nd-card-glow rounded-2xl p-3 text-center">
+            <div key={s.label} className="bg-nd-card nd-card-glow rounded-2xl p-3 text-center">
               <Icon name={s.icon} size={16} className="text-nd-yellow-dark mx-auto mb-1.5" />
-              <p className="text-nd-dark font-black text-base">{s.value}</p>
+              <p className="text-foreground font-black text-base">{s.value}</p>
               <p className="text-nd-muted text-[10px]">{s.label}</p>
             </div>
           ))}
@@ -89,16 +89,16 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
 
       {/* Achievements */}
       <div className="px-4 mb-4">
-        <h3 className="text-nd-dark font-bold mb-3">Достижения</h3>
+        <h3 className="text-foreground font-bold mb-3">Достижения</h3>
         <div className="grid grid-cols-2 gap-2">
           {achievements.map((a) => (
             <div
               key={a.title}
-              className={`bg-white nd-card-glow rounded-2xl p-3 flex items-center gap-2 ${!a.done ? "opacity-40" : ""}`}
+              className={`bg-nd-card nd-card-glow rounded-2xl p-3 flex items-center gap-2 ${!a.done ? "opacity-40" : ""}`}
             >
               <span className="text-2xl">{a.icon}</span>
               <div>
-                <p className="text-nd-dark text-xs font-bold">{a.title}</p>
+                <p className="text-foreground text-xs font-bold">{a.title}</p>
                 <p className="text-nd-muted text-[10px] leading-tight">{a.desc}</p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
 
       {/* Settings */}
       <div className="px-4 mb-4">
-        <h3 className="text-nd-dark font-bold mb-3">Настройки</h3>
+        <h3 className="text-foreground font-bold mb-3">Настройки</h3>
         <div className="bg-nd-card nd-card-glow rounded-2xl overflow-hidden">
           {menuItems.map((item, i) => (
             <button
@@ -120,7 +120,7 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
               <div className="w-8 h-8 rounded-lg bg-nd-card2 flex items-center justify-center flex-shrink-0">
                 <Icon name={item.icon} size={15} className="text-nd-muted" />
               </div>
-              <span className="flex-1 text-nd-dark text-sm font-medium">{item.label}</span>
+              <span className="flex-1 text-foreground text-sm font-medium">{item.label}</span>
               {item.badge && (
                 <span className="w-5 h-5 rounded-full bg-nd-yellow text-nd-dark text-[10px] font-bold flex items-center justify-center">
                   {item.badge}
@@ -134,13 +134,13 @@ export default function ProfilePage({ userName, phone }: ProfilePageProps) {
 
       {/* Push toggle */}
       <div className="px-4 mb-4">
-        <div className="bg-white nd-card-glow rounded-2xl p-4 flex items-center justify-between">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-nd-card2 flex items-center justify-center">
               <Icon name="Bell" size={15} className="text-nd-muted" />
             </div>
             <div>
-              <p className="text-nd-dark text-sm font-medium">Push-уведомления</p>
+              <p className="text-foreground text-sm font-medium">Push-уведомления</p>
               <p className="text-nd-muted text-xs">О начислениях и новостях</p>
             </div>
           </div>

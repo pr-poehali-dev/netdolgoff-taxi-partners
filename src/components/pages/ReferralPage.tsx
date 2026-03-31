@@ -30,7 +30,7 @@ export default function ReferralPage() {
 
       {/* QR Code */}
       <div className="px-4 mt-4 mb-4">
-        <div className="bg-white nd-card-glow rounded-2xl p-6 flex flex-col items-center">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-6 flex flex-col items-center">
           <div className="w-48 h-48 bg-nd-dark rounded-2xl flex items-center justify-center mb-4 p-4">
             <div className="w-full h-full grid grid-cols-7 grid-rows-7 gap-0.5">
               {Array.from({ length: 49 }).map((_, i) => {
@@ -52,9 +52,9 @@ export default function ReferralPage() {
       {/* Promo code */}
       <div className="px-4 mb-3">
         <p className="text-nd-muted text-xs font-semibold uppercase tracking-wider mb-2">Промокод</p>
-        <div className="bg-white nd-card-glow rounded-2xl p-4 flex items-center gap-3">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center gap-3">
           <div className="flex-1">
-            <p className="text-nd-dark font-mono font-black text-xl">{PROMO}</p>
+            <p className="text-foreground font-mono font-black text-xl">{PROMO}</p>
             <p className="text-nd-muted text-xs mt-0.5">Называйте пассажиру при звонке</p>
           </div>
           <button
@@ -73,7 +73,7 @@ export default function ReferralPage() {
       {/* Referral link */}
       <div className="px-4 mb-4">
         <p className="text-nd-muted text-xs font-semibold uppercase tracking-wider mb-2">Реферальная ссылка</p>
-        <div className="bg-white nd-card-glow rounded-2xl p-4">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4">
           <p className="text-nd-muted text-xs font-mono break-all mb-3 bg-nd-card2 rounded-xl p-2">{LINK}</p>
           <div className="flex gap-2">
             <button
@@ -81,7 +81,7 @@ export default function ReferralPage() {
               className={`flex-1 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
                 copied === "link"
                   ? "bg-nd-green text-white"
-                  : "bg-nd-card2 text-nd-dark border border-nd-border"
+                  : "bg-nd-card2 text-foreground border border-nd-border"
               }`}
             >
               <Icon name="Copy" size={14} />
@@ -103,15 +103,15 @@ export default function ReferralPage() {
         <p className="text-nd-muted text-xs font-semibold uppercase tracking-wider mb-2">Отправить через</p>
         <div className="grid grid-cols-4 gap-2">
           {[
-            { name: "WhatsApp", icon: "MessageCircle", bg: "bg-green-50", ic: "text-green-500" },
-            { name: "Telegram", icon: "Send", bg: "bg-blue-50", ic: "text-blue-500" },
-            { name: "ВКонтакте", icon: "Users", bg: "bg-blue-50", ic: "text-blue-400" },
+            { name: "WhatsApp", icon: "MessageCircle", bg: "bg-green-500/10", ic: "text-green-500" },
+            { name: "Telegram", icon: "Send", bg: "bg-blue-500/10", ic: "text-blue-500" },
+            { name: "ВКонтакте", icon: "Users", bg: "bg-blue-500/10", ic: "text-blue-400" },
             { name: "СМС", icon: "Smartphone", bg: "bg-nd-yellow-light", ic: "text-nd-yellow-dark" },
           ].map((ch) => (
             <button
               key={ch.name}
               onClick={share}
-              className="flex flex-col items-center gap-1.5 p-3 rounded-xl nd-card-glow bg-white hover-scale"
+              className="flex flex-col items-center gap-1.5 p-3 rounded-xl nd-card-glow bg-nd-card hover-scale"
             >
               <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${ch.bg}`}>
                 <Icon name={ch.icon} size={18} className={ch.ic} />
@@ -124,13 +124,13 @@ export default function ReferralPage() {
 
       {/* Script hint */}
       <div className="px-4 mb-6">
-        <div className="bg-white nd-card-glow rounded-2xl p-4">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-3">
             <Icon name="Lightbulb" size={16} className="text-nd-yellow-dark" />
-            <p className="text-nd-dark font-semibold text-sm">Скрипт для пассажира</p>
+            <p className="text-foreground font-semibold text-sm">Скрипт для пассажира</p>
           </div>
           <div className="bg-nd-yellow-light rounded-xl p-3 border border-nd-yellow/30">
-            <p className="text-nd-dark/70 text-sm leading-relaxed italic">
+            <p className="text-foreground/70 text-sm leading-relaxed italic">
               «Есть долги? Знаю компанию — Нетдолгофф. Помогают законно списать до 95% долгов по ФЗ-127.
               Консультация бесплатная. Вот моя ссылка — там всё объяснят.»
             </p>
