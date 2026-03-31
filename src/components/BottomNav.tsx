@@ -18,7 +18,7 @@ const tabs = [
 
 export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-nd-card border-t border-nd-border z-50">
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-nd-border z-50 shadow-lg">
       <div className="flex items-center justify-around px-1 py-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
@@ -27,18 +27,13 @@ export default function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`flex flex-col items-center gap-0.5 px-1 py-1 rounded-xl transition-all duration-200 min-w-0 flex-1 ${
-                isActive
-                  ? "text-nd-red"
-                  : "text-nd-muted hover:text-foreground"
+                isActive ? "text-nd-dark" : "text-nd-muted hover:text-nd-dark"
               }`}
             >
-              <div className={`p-1.5 rounded-lg transition-all duration-200 ${isActive ? "bg-nd-red/10" : ""}`}>
-                <Icon name={tab.icon} size={18} className={isActive ? "text-nd-red" : ""} />
+              <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? "bg-nd-yellow" : ""}`}>
+                <Icon name={tab.icon} size={18} className={isActive ? "text-nd-dark" : "text-nd-muted"} />
               </div>
-              <span className="text-[10px] font-medium truncate w-full text-center leading-none">{tab.label}</span>
-              {isActive && (
-                <div className="w-1 h-1 rounded-full bg-nd-red mt-0.5" />
-              )}
+              <span className="text-[10px] font-semibold truncate w-full text-center leading-none">{tab.label}</span>
             </button>
           );
         })}

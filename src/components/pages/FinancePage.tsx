@@ -12,101 +12,94 @@ const transactions = [
 ];
 
 const statusLabels: Record<string, { label: string; color: string }> = {
-  paid: { label: "Начислено", color: "text-nd-green bg-nd-green/10" },
-  pending: { label: "В обработке", color: "text-nd-yellow bg-nd-yellow/10" },
-  withdrawn: { label: "Выведено", color: "text-nd-muted bg-nd-border/30" },
+  paid: { label: "Начислено", color: "text-nd-green bg-green-50" },
+  pending: { label: "В обработке", color: "text-yellow-600 bg-yellow-50" },
+  withdrawn: { label: "Выведено", color: "text-nd-muted bg-nd-card2" },
 };
 
 export default function FinancePage({ onNavigate }: FinancePageProps) {
-  const available = 21000;
-  const total = 33000;
-  const withdrawn = 10000;
-  const nextBonus = 12000;
-  const clientsCount = 3;
-
   return (
     <div className="flex flex-col">
-      {/* Header */}
-      <div className="px-4 pt-10 pb-5">
-        <h1 className="text-2xl font-black text-foreground">Финансы</h1>
-        <p className="text-nd-muted text-sm mt-1">История начислений и баланс</p>
+      <div className="px-4 pt-10 pb-5 nd-gradient">
+        <h1 className="text-2xl font-black text-nd-dark">Финансы</h1>
+        <p className="text-nd-dark/60 text-sm mt-1">История начислений и баланс</p>
       </div>
 
       {/* Balance card */}
-      <div className="px-4 mb-4">
-        <div className="nd-gradient rounded-2xl p-5 relative overflow-hidden nd-red-glow">
+      <div className="px-4 mt-4 mb-4">
+        <div className="nd-dark-gradient rounded-2xl p-5 relative overflow-hidden">
           <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full bg-white/5" />
           <div className="relative z-10">
-            <p className="text-white/70 text-sm font-medium">Доступно к выводу</p>
-            <p className="text-white text-4xl font-black mt-1">{available.toLocaleString("ru-RU")} ₽</p>
-            <div className="flex gap-4 mt-4">
+            <p className="text-white/60 text-sm font-medium">Доступно к выводу</p>
+            <p className="text-white text-4xl font-black mt-1">21 000 ₽</p>
+            <div className="flex gap-5 mt-4">
               <div>
-                <p className="text-white/60 text-xs">Заработано</p>
-                <p className="text-white font-bold">{total.toLocaleString("ru-RU")} ₽</p>
+                <p className="text-white/50 text-xs">Заработано</p>
+                <p className="text-nd-yellow font-bold text-sm">33 000 ₽</p>
               </div>
-              <div className="w-px bg-white/20" />
+              <div className="w-px bg-white/10" />
               <div>
-                <p className="text-white/60 text-xs">Выведено</p>
-                <p className="text-white font-bold">{withdrawn.toLocaleString("ru-RU")} ₽</p>
+                <p className="text-white/50 text-xs">Выведено</p>
+                <p className="text-white font-bold text-sm">10 000 ₽</p>
               </div>
-              <div className="w-px bg-white/20" />
+              <div className="w-px bg-white/10" />
               <div>
-                <p className="text-white/60 text-xs">Клиентов</p>
-                <p className="text-white font-bold">{clientsCount}</p>
+                <p className="text-white/50 text-xs">Клиентов</p>
+                <p className="text-white font-bold text-sm">3</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Withdraw button */}
+      {/* Withdraw CTA */}
       <div className="px-4 mb-4">
         <button
           onClick={() => onNavigate("withdraw")}
-          className="w-full py-4 rounded-2xl bg-nd-card nd-card-glow border border-nd-border text-foreground font-bold flex items-center justify-center gap-2 hover-scale"
+          className="w-full py-4 rounded-2xl nd-gradient text-nd-dark font-bold nd-yellow-glow flex items-center justify-center gap-2 hover-scale"
         >
-          <Icon name="CreditCard" size={18} className="text-nd-red" />
-          Вывести {available.toLocaleString("ru-RU")} ₽ на карту
-          <Icon name="ChevronRight" size={16} className="text-nd-muted" />
+          <Icon name="CreditCard" size={18} />
+          Вывести 21 000 ₽ на карту
+          <Icon name="ChevronRight" size={16} className="text-nd-dark/60" />
         </button>
       </div>
 
-      {/* Monthly bonus progress */}
+      {/* Monthly bonus */}
       <div className="px-4 mb-4">
-        <div className="bg-nd-card nd-card-glow rounded-2xl p-4">
+        <div className="bg-white nd-card-glow rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Icon name="Trophy" size={16} className="text-nd-yellow" />
-              <p className="text-foreground font-semibold text-sm">Бонус месяца</p>
+              <Icon name="Trophy" size={16} className="text-nd-yellow-dark" />
+              <p className="text-nd-dark font-semibold text-sm">Бонус месяца</p>
             </div>
-            <span className="status-badge text-nd-green bg-nd-green/10">3/3 клиента</span>
+            <span className="status-badge text-nd-green bg-green-50">3/3 клиента</span>
           </div>
           <div className="bg-nd-card2 rounded-lg h-2.5 overflow-hidden mb-2">
-            <div className="h-full nd-gradient rounded-lg" style={{ width: "100%" }} />
+            <div className="h-full nd-gradient rounded-lg w-full" />
           </div>
           <p className="text-nd-muted text-xs">
-            🎉 Условие выполнено! Вам начислено <span className="text-nd-yellow font-bold">50 000 ₽</span> — бонус за 3 клиента в марте
+            🎉 Условие выполнено! Начислен бонус <span className="text-nd-yellow-dark font-bold">50 000 ₽</span> за 3 клиента в марте
           </p>
         </div>
       </div>
 
-      {/* Next client bonus */}
+      {/* Next client */}
       <div className="px-4 mb-4">
-        <div className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-nd-red/10 flex items-center justify-center flex-shrink-0">
-            <Icon name="Zap" size={18} className="text-nd-red" />
+        <div className="bg-nd-yellow-light border border-nd-yellow/40 rounded-2xl p-4 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-nd-yellow flex items-center justify-center flex-shrink-0">
+            <Icon name="Zap" size={18} className="text-nd-dark" />
           </div>
           <div className="flex-1">
-            <p className="text-foreground font-semibold text-sm">Следующий клиент</p>
-            <p className="text-nd-muted text-xs">4-й клиент принесёт</p>
+            <p className="text-nd-dark font-semibold text-sm">Следующий клиент</p>
+            <p className="text-nd-dark/60 text-xs">4-й клиент принесёт</p>
           </div>
-          <p className="text-nd-red font-black text-xl">+{nextBonus.toLocaleString("ru-RU")} ₽</p>
+          <p className="text-nd-yellow-dark font-black text-xl">+12 000 ₽</p>
         </div>
       </div>
 
       {/* Transactions */}
       <div className="px-4 mb-6">
-        <h2 className="text-foreground font-bold mb-3 flex items-center gap-2">
+        <h2 className="text-nd-dark font-bold mb-3 flex items-center gap-2">
           <Icon name="Receipt" size={16} className="text-nd-muted" />
           История начислений
         </h2>
@@ -114,12 +107,12 @@ export default function FinancePage({ onNavigate }: FinancePageProps) {
           {transactions.map((t) => {
             const st = statusLabels[t.status];
             return (
-              <div key={t.id} className="bg-nd-card nd-card-glow rounded-2xl p-4 flex items-center gap-3">
+              <div key={t.id} className="bg-white nd-card-glow rounded-2xl p-4 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-nd-card2 flex items-center justify-center flex-shrink-0">
                   <span className="text-nd-muted text-xs font-bold">#{t.num}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-foreground font-semibold text-sm">{t.client}</p>
+                  <p className="text-nd-dark font-semibold text-sm">{t.client}</p>
                   <p className="text-nd-muted text-xs">{t.date}</p>
                 </div>
                 <div className="text-right">

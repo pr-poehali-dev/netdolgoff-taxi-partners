@@ -4,55 +4,57 @@
 
 @layer base {
   :root {
-    --background: 220 14% 8%;
-    --foreground: 0 0% 96%;
+    --background: 0 0% 96%;
+    --foreground: 220 15% 12%;
 
-    --card: 220 12% 11%;
-    --card-foreground: 0 0% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 12%;
 
-    --popover: 220 12% 11%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 12%;
 
-    --primary: 4 90% 48%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 100% 51%;
+    --primary-foreground: 220 15% 12%;
 
-    --secondary: 220 10% 16%;
-    --secondary-foreground: 0 0% 80%;
+    --secondary: 0 0% 93%;
+    --secondary-foreground: 220 15% 12%;
 
-    --muted: 220 10% 16%;
-    --muted-foreground: 220 8% 55%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 220 8% 46%;
 
-    --accent: 4 90% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 100% 51%;
+    --accent-foreground: 220 15% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 18%;
-    --input: 220 10% 18%;
-    --ring: 4 90% 48%;
+    --border: 220 10% 88%;
+    --input: 220 10% 88%;
+    --ring: 45 100% 51%;
 
     --radius: 1rem;
 
-    --nd-red: 4 90% 48%;
-    --nd-red-light: 4 90% 58%;
-    --nd-dark: 220 14% 8%;
-    --nd-card: 220 12% 11%;
-    --nd-card2: 220 10% 14%;
-    --nd-border: 220 10% 18%;
-    --nd-text: 0 0% 96%;
-    --nd-muted: 220 8% 55%;
-    --nd-green: 142 70% 45%;
-    --nd-yellow: 43 96% 56%;
+    /* Brand colors */
+    --nd-yellow: 45 100% 51%;
+    --nd-yellow-dark: 38 95% 43%;
+    --nd-yellow-light: 48 100% 92%;
+    --nd-dark: 220 15% 12%;
+    --nd-card: 0 0% 100%;
+    --nd-card2: 0 0% 95%;
+    --nd-border: 220 10% 88%;
+    --nd-text: 220 15% 12%;
+    --nd-muted: 220 8% 46%;
+    --nd-green: 142 65% 38%;
+    --nd-red: 0 84% 55%;
 
-    --sidebar-background: 220 12% 11%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 4 90% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 10% 16%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 220 10% 18%;
-    --sidebar-ring: 4 90% 48%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 15% 12%;
+    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary-foreground: 220 15% 12%;
+    --sidebar-accent: 0 0% 93%;
+    --sidebar-accent-foreground: 220 15% 12%;
+    --sidebar-border: 220 10% 88%;
+    --sidebar-ring: 45 100% 51%;
   }
 }
 
@@ -71,7 +73,7 @@
     width: 4px;
   }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--nd-dark));
+    background: hsl(var(--nd-card2));
   }
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--nd-border));
@@ -83,26 +85,27 @@
   .nd-gradient {
     background: linear-gradient(
       135deg,
-      hsl(var(--nd-red)) 0%,
-      hsl(4, 80%, 38%) 100%
+      hsl(var(--nd-yellow)) 0%,
+      hsl(var(--nd-yellow-dark)) 100%
+    );
+  }
+
+  .nd-dark-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--nd-dark)) 0%,
+      hsl(220, 20%, 22%) 100%
     );
   }
 
   .nd-card-glow {
     box-shadow:
-      0 0 0 1px hsl(var(--nd-border)),
-      0 4px 24px rgba(0, 0, 0, 0.3);
+      0 1px 3px rgba(0, 0, 0, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.06);
   }
 
-  .nd-red-glow {
-    box-shadow: 0 4px 20px hsla(var(--nd-red), 0.35);
-  }
-
-  .nd-text-gradient {
-    background: linear-gradient(135deg, #fff 0%, hsl(var(--nd-red-light)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .nd-yellow-glow {
+    box-shadow: 0 4px 20px hsla(var(--nd-yellow), 0.45);
   }
 
   .animate-fade-in {
@@ -113,33 +116,14 @@
     animation: slideUp 0.4s ease forwards;
   }
 
-  .tab-active {
-    color: hsl(var(--nd-red));
-  }
-
-  .tab-inactive {
-    color: hsl(var(--nd-muted));
-  }
-
   .hover-scale {
     transition: transform 0.15s ease;
   }
   .hover-scale:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
   .hover-scale:active {
     transform: scale(0.97);
-  }
-
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--nd-card)) 25%,
-      hsl(var(--nd-card2)) 50%,
-      hsl(var(--nd-card)) 75%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
   }
 
   .status-badge {
@@ -159,19 +143,10 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
   }
 }

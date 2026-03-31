@@ -64,8 +64,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         nd: {
-          red: "hsl(var(--nd-red))",
-          "red-light": "hsl(var(--nd-red-light))",
+          yellow: "hsl(var(--nd-yellow))",
+          "yellow-dark": "hsl(var(--nd-yellow-dark))",
+          "yellow-light": "hsl(var(--nd-yellow-light))",
           dark: "hsl(var(--nd-dark))",
           card: "hsl(var(--nd-card))",
           card2: "hsl(var(--nd-card2))",
@@ -73,7 +74,6 @@ export default {
           text: "hsl(var(--nd-text))",
           muted: "hsl(var(--nd-muted))",
           green: "hsl(var(--nd-green))",
-          yellow: "hsl(var(--nd-yellow))",
         },
       },
       borderRadius: {
