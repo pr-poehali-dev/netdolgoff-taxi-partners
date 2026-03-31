@@ -150,7 +150,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             {[
               { v: "10 000+", l: "закрытых дел" },
               { v: "150+", l: "юристов" },
-              { v: "95%", l: "долгов списывают" },
+              { v: "РФ", l: "Работаем по всей России" },
             ].map((s) => (
               <div key={s.l} className="bg-white/10 rounded-xl py-3">
                 <p className="text-nd-yellow font-black text-xl">{s.v}</p>
