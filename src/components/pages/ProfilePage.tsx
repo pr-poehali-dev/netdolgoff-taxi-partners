@@ -23,7 +23,7 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col">
       {/* Yellow header */}
-      <div className="px-4 pt-10 pb-6 nd-gradient relative overflow-hidden">
+      <div className="px-4 pt-5 pb-6 nd-gradient relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full bg-black/5" />
         <div className="relative z-10 flex items-center gap-4">
           <div className="relative">

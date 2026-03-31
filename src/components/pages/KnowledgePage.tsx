@@ -114,7 +114,7 @@ export default function KnowledgePage() {
   if (selected) {
     return (
       <div className="flex flex-col animate-fade-in">
-        <div className="px-4 pt-10 pb-4 nd-gradient flex items-center gap-3">
+        <div className="px-4 pt-5 pb-4 nd-gradient flex items-center gap-3">
           <button
             onClick={() => setSelected(null)}
             className="w-9 h-9 rounded-xl bg-black/10 flex items-center justify-center"
@@ -148,7 +148,7 @@ export default function KnowledgePage() {
 
   return (
     <div className="flex flex-col">
-      <div className="px-4 pt-10 pb-5 nd-gradient">
+      <div className="px-4 pt-5 pb-5 nd-gradient">
         <h1 className="text-2xl font-black text-nd-dark">База знаний</h1>
         <p className="text-nd-dark/60 text-sm mt-1">Всё о банкротстве и работе с клиентами</p>
       </div>

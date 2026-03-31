@@ -39,7 +39,7 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header */}
-      <div className="px-4 pt-10 pb-4 nd-gradient flex-shrink-0">
+      <div className="px-4 pt-5 pb-4 nd-gradient flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">

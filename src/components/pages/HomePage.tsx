@@ -16,7 +16,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   return (
     <div className="flex flex-col">
       {/* Header yellow */}
-      <div className="px-4 pt-10 pb-6 nd-gradient relative overflow-hidden">
+      <div className="px-4 pt-5 pb-6 nd-gradient relative overflow-hidden">
         <div className="absolute -top-8 -right-8 w-44 h-44 rounded-full bg-black/5" />
         <div className="absolute -bottom-10 -left-8 w-56 h-56 rounded-full bg-black/5" />
         <div className="relative z-10">

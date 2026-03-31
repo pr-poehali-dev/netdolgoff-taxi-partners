@@ -20,7 +20,7 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 export default function FinancePage({ onNavigate }: FinancePageProps) {
   return (
     <div className="flex flex-col">
-      <div className="px-4 pt-10 pb-5 nd-gradient">
+      <div className="px-4 pt-5 pb-5 nd-gradient">
         <h1 className="text-2xl font-black text-nd-dark">Финансы</h1>
         <p className="text-nd-dark/60 text-sm mt-1">История начислений и баланс</p>
       </div>

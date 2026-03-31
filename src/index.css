@@ -3,38 +3,30 @@
 @tailwind utilities;
 
 @layer base {
+  /* === СВЕТЛАЯ ТЕМА (по умолчанию) === */
   :root {
     --background: 0 0% 96%;
     --foreground: 220 15% 12%;
-
     --card: 0 0% 100%;
     --card-foreground: 220 15% 12%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 12%;
-
     --primary: 45 100% 51%;
     --primary-foreground: 220 15% 12%;
-
     --secondary: 0 0% 93%;
     --secondary-foreground: 220 15% 12%;
-
     --muted: 0 0% 93%;
     --muted-foreground: 220 8% 46%;
-
     --accent: 45 100% 51%;
     --accent-foreground: 220 15% 12%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 220 10% 88%;
     --input: 220 10% 88%;
     --ring: 45 100% 51%;
-
     --radius: 1rem;
 
-    /* Brand colors */
+    /* Brand */
     --nd-yellow: 45 100% 51%;
     --nd-yellow-dark: 38 95% 43%;
     --nd-yellow-light: 48 100% 92%;
@@ -56,19 +48,65 @@
     --sidebar-border: 220 10% 88%;
     --sidebar-ring: 45 100% 51%;
   }
+
+  /* === ТЁМНАЯ ТЕМА === */
+  .dark {
+    --background: 220 14% 8%;
+    --foreground: 0 0% 96%;
+    --card: 220 12% 11%;
+    --card-foreground: 0 0% 96%;
+    --popover: 220 12% 11%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 45 100% 51%;
+    --primary-foreground: 220 15% 12%;
+    --secondary: 220 10% 16%;
+    --secondary-foreground: 0 0% 80%;
+    --muted: 220 10% 16%;
+    --muted-foreground: 220 8% 55%;
+    --accent: 45 100% 51%;
+    --accent-foreground: 220 15% 12%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 10% 18%;
+    --input: 220 10% 18%;
+    --ring: 45 100% 51%;
+
+    /* Brand dark */
+    --nd-yellow: 45 100% 51%;
+    --nd-yellow-dark: 38 95% 43%;
+    --nd-yellow-light: 45 60% 18%;
+    --nd-dark: 220 14% 8%;
+    --nd-card: 220 12% 11%;
+    --nd-card2: 220 10% 14%;
+    --nd-border: 220 10% 18%;
+    --nd-text: 0 0% 96%;
+    --nd-muted: 220 8% 55%;
+    --nd-green: 142 65% 45%;
+    --nd-red: 0 84% 60%;
+
+    --sidebar-background: 220 12% 11%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary-foreground: 220 15% 12%;
+    --sidebar-accent: 220 10% 16%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 220 10% 18%;
+    --sidebar-ring: 45 100% 51%;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
     font-family: "Golos Text", sans-serif;
     -webkit-font-smoothing: antialiased;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
-
   ::-webkit-scrollbar {
     width: 4px;
   }
@@ -93,25 +131,30 @@
   .nd-dark-gradient {
     background: linear-gradient(
       135deg,
-      hsl(var(--nd-dark)) 0%,
-      hsl(220, 20%, 22%) 100%
+      hsl(220, 15%, 12%) 0%,
+      hsl(220, 20%, 20%) 100%
     );
   }
 
   .nd-card-glow {
     box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.06),
-      0 4px 16px rgba(0, 0, 0, 0.06);
+      0 1px 3px rgba(0, 0, 0, 0.07),
+      0 4px 16px rgba(0, 0, 0, 0.07);
+  }
+
+  .dark .nd-card-glow {
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.25);
   }
 
   .nd-yellow-glow {
-    box-shadow: 0 4px 20px hsla(var(--nd-yellow), 0.45);
+    box-shadow: 0 4px 20px hsla(45, 100%, 51%, 0.4);
   }
 
   .animate-fade-in {
     animation: fadeIn 0.35s ease forwards;
   }
-
   .animate-slide-up {
     animation: slideUp 0.4s ease forwards;
   }
@@ -128,6 +171,13 @@
 
   .status-badge {
     @apply text-xs font-medium px-2 py-0.5 rounded-full;
+  }
+
+  .theme-transition * {
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.15s ease !important;
   }
 }
 

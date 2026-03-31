@@ -8,6 +8,7 @@ import AiAssistantPage from "@/components/pages/AiAssistantPage";
 import ChatPage from "@/components/pages/ChatPage";
 import ProfilePage from "@/components/pages/ProfilePage";
 import BottomNav from "@/components/BottomNav";
+import AppHeader from "@/components/AppHeader";
 
 export type TabId = "home" | "referral" | "finance" | "withdraw" | "knowledge" | "ai" | "chat" | "profile";
 
@@ -32,7 +33,8 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto relative shadow-2xl">
-      <div className="flex-1 overflow-y-auto pb-20">
+      <AppHeader />
+      <div className="flex-1 overflow-y-auto pb-20 pt-14">
         <div key={activeTab} className="animate-fade-in">
           {renderPage()}
         </div>
