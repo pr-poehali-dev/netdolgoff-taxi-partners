@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import { useAuth } from "@/contexts/AuthContext";
 
 const menuItems = [
   { icon: "Bell", label: "Уведомления", badge: "2" },
@@ -17,7 +18,13 @@ const achievements = [
   { icon: "💎", title: "Топ партнёр", desc: "10+ клиентов всего", done: false },
 ];
 
-export default function ProfilePage() {
+interface ProfilePageProps {
+  userName: string;
+  phone: string;
+}
+
+export default function ProfilePage({ userName, phone }: ProfilePageProps) {
+  const { logout } = useAuth();
   const [notifications, setNotifications] = useState(true);
 
   return (
@@ -28,15 +35,15 @@ export default function ProfilePage() {
         <div className="relative z-10 flex items-center gap-4">
           <div className="relative">
             <div className="w-16 h-16 rounded-2xl bg-nd-dark flex items-center justify-center">
-              <span className="text-nd-yellow text-2xl font-black">А</span>
+              <span className="text-nd-yellow text-2xl font-black">{userName.charAt(0).toUpperCase()}</span>
             </div>
             <button className="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg bg-white border border-nd-border flex items-center justify-center">
               <Icon name="Camera" size={12} className="text-nd-muted" />
             </button>
           </div>
           <div className="flex-1">
-            <h2 className="text-nd-dark text-xl font-black">Алексей Петров</h2>
-            <p className="text-nd-dark/60 text-sm">+7 (916) 234-56-78</p>
+            <h2 className="text-nd-dark text-xl font-black">{userName}</h2>
+            <p className="text-nd-dark/60 text-sm">{phone}</p>
             <div className="flex items-center gap-1.5 mt-1">
               <Icon name="MapPin" size={12} className="text-nd-dark/50" />
               <p className="text-nd-dark/50 text-xs">Москва · ID: #AP2847</p>
@@ -102,7 +109,7 @@ export default function ProfilePage() {
       {/* Settings */}
       <div className="px-4 mb-4">
         <h3 className="text-nd-dark font-bold mb-3">Настройки</h3>
-        <div className="bg-white nd-card-glow rounded-2xl overflow-hidden">
+        <div className="bg-nd-card nd-card-glow rounded-2xl overflow-hidden">
           {menuItems.map((item, i) => (
             <button
               key={item.label}
@@ -156,7 +163,10 @@ export default function ProfilePage() {
       </div>
 
       <div className="px-4 mb-8">
-        <button className="w-full py-3.5 rounded-2xl border-2 border-nd-border text-nd-muted font-semibold text-sm flex items-center justify-center gap-2 hover:border-nd-yellow hover:text-nd-dark transition-all">
+        <button
+          onClick={logout}
+          className="w-full py-3.5 rounded-2xl border-2 border-nd-border text-nd-muted font-semibold text-sm flex items-center justify-center gap-2 hover:border-nd-red hover:text-nd-red transition-all"
+        >
           <Icon name="LogOut" size={16} />
           Выйти из аккаунта
         </button>

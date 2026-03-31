@@ -3,6 +3,7 @@ import { TabId } from "@/pages/Index";
 
 interface HomePageProps {
   onNavigate: (tab: TabId) => void;
+  userName: string;
 }
 
 const steps = [
@@ -12,7 +13,7 @@ const steps = [
   { num: "4", text: "Ты получаешь от 10 000 ₽ на карту" },
 ];
 
-export default function HomePage({ onNavigate }: HomePageProps) {
+export default function HomePage({ onNavigate, userName }: HomePageProps) {
   return (
     <div className="flex flex-col">
       {/* Header yellow */}
@@ -23,10 +24,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <div className="flex items-center justify-between mb-5">
             <div>
               <p className="text-nd-dark/60 text-sm font-medium">Добро пожаловать,</p>
-              <h1 className="text-nd-dark text-2xl font-black leading-tight">Алексей Петров</h1>
+              <h1 className="text-nd-dark text-2xl font-black leading-tight">{userName}</h1>
             </div>
             <div className="w-12 h-12 rounded-2xl bg-black/10 flex items-center justify-center">
-              <span className="text-nd-dark text-xl font-black">А</span>
+              <span className="text-nd-dark text-xl font-black">{userName.charAt(0).toUpperCase()}</span>
             </div>
           </div>
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-4 border border-white/70">

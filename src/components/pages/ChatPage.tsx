@@ -62,7 +62,7 @@ export default function ChatPage() {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-background">
         <div className="text-center">
-          <span className="text-nd-muted text-xs bg-white nd-card-glow px-3 py-1 rounded-full">Сегодня</span>
+          <span className="text-nd-muted text-xs bg-nd-card nd-card-glow px-3 py-1 rounded-full">Сегодня</span>
         </div>
 
         {messages.map((msg) => (
@@ -76,7 +76,7 @@ export default function ChatPage() {
               <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                 msg.role === "user"
                   ? "nd-gradient text-nd-dark rounded-tr-sm"
-                  : "bg-white nd-card-glow text-nd-dark rounded-tl-sm"
+                  : "bg-nd-card nd-card-glow text-foreground rounded-tl-sm"
               }`}>
                 {msg.text}
               </div>
@@ -93,7 +93,7 @@ export default function ChatPage() {
             <div className="w-7 h-7 rounded-full bg-nd-dark flex items-center justify-center flex-shrink-0 mt-1">
               <span className="text-nd-yellow text-xs font-bold">Д</span>
             </div>
-            <div className="bg-white nd-card-glow rounded-2xl rounded-tl-sm px-4 py-3">
+            <div className="bg-nd-card nd-card-glow rounded-2xl rounded-tl-sm px-4 py-3">
               <div className="flex items-center gap-1">
                 <span className="text-nd-muted text-xs mr-1">Дмитрий печатает</span>
                 {[0, 150, 300].map((delay) => (
@@ -113,7 +113,7 @@ export default function ChatPage() {
             <button
               key={q}
               onClick={() => setInput(q)}
-              className="px-3 py-1.5 bg-white nd-card-glow rounded-xl text-xs font-medium text-nd-dark whitespace-nowrap flex-shrink-0 border border-nd-border"
+              className="px-3 py-1.5 bg-nd-card nd-card-glow rounded-xl text-xs font-medium text-foreground whitespace-nowrap flex-shrink-0 border border-nd-border"
             >
               {q}
             </button>
@@ -122,7 +122,7 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <div className="px-4 py-3 bg-white border-t border-nd-border flex-shrink-0" style={{ paddingBottom: "calc(0.75rem + 80px)" }}>
+      <div className="px-4 py-3 bg-nd-card border-t border-nd-border flex-shrink-0" style={{ paddingBottom: "calc(0.75rem + 80px)" }}>
         <div className="flex gap-2 items-end">
           <button className="w-9 h-9 rounded-xl bg-nd-card2 border border-nd-border flex items-center justify-center flex-shrink-0">
             <Icon name="Paperclip" size={16} className="text-nd-muted" />
@@ -134,7 +134,7 @@ export default function ChatPage() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               placeholder="Написать куратору..."
-              className="w-full bg-transparent text-nd-dark text-sm outline-none placeholder:text-nd-muted"
+              className="w-full bg-transparent text-foreground text-sm outline-none placeholder:text-nd-muted"
             />
           </div>
           <button

@@ -77,13 +77,13 @@ export default function AiAssistantPage() {
       </div>
 
       {/* Quick questions */}
-      <div className="px-4 py-3 border-b border-nd-border bg-white flex-shrink-0">
+      <div className="px-4 py-3 border-b border-nd-border bg-nd-card flex-shrink-0">
         <div className="flex gap-2 overflow-x-auto pb-1">
           {quickQuestions.map((q) => (
             <button
               key={q}
               onClick={() => sendMessage(q)}
-              className="px-3 py-1.5 bg-nd-card2 rounded-xl text-xs font-medium text-nd-dark whitespace-nowrap flex-shrink-0 hover:bg-nd-yellow-light transition-all border border-nd-border"
+              className="px-3 py-1.5 bg-nd-card2 rounded-xl text-xs font-medium text-foreground whitespace-nowrap flex-shrink-0 hover:bg-nd-yellow-light hover:text-nd-dark transition-all border border-nd-border"
             >
               {q}
             </button>
@@ -104,7 +104,7 @@ export default function AiAssistantPage() {
               <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line ${
                 msg.role === "user"
                   ? "nd-gradient text-nd-dark rounded-tr-sm"
-                  : "bg-white nd-card-glow text-nd-dark rounded-tl-sm"
+                  : "bg-nd-card nd-card-glow text-foreground rounded-tl-sm"
               }`}>
                 {msg.text}
               </div>
@@ -117,7 +117,7 @@ export default function AiAssistantPage() {
             <div className="w-7 h-7 rounded-full bg-nd-dark flex items-center justify-center flex-shrink-0 mt-1">
               <Icon name="Bot" size={13} className="text-nd-yellow" />
             </div>
-            <div className="bg-white nd-card-glow rounded-2xl rounded-tl-sm px-4 py-3">
+            <div className="bg-nd-card nd-card-glow rounded-2xl rounded-tl-sm px-4 py-3">
               <div className="flex gap-1 items-center">
                 {[0, 150, 300].map((delay) => (
                   <div key={delay} className="w-2 h-2 rounded-full bg-nd-muted animate-bounce" style={{ animationDelay: `${delay}ms` }} />
@@ -130,7 +130,7 @@ export default function AiAssistantPage() {
       </div>
 
       {/* Input */}
-      <div className="px-4 py-3 bg-white border-t border-nd-border flex-shrink-0" style={{ paddingBottom: "calc(0.75rem + 80px)" }}>
+      <div className="px-4 py-3 bg-nd-card border-t border-nd-border flex-shrink-0" style={{ paddingBottom: "calc(0.75rem + 80px)" }}>
         <div className="flex gap-2 items-end">
           <div className="flex-1 bg-nd-card2 rounded-2xl border border-nd-border px-4 py-2.5">
             <input
@@ -139,7 +139,7 @@ export default function AiAssistantPage() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
               placeholder="Задайте вопрос..."
-              className="w-full bg-transparent text-nd-dark text-sm outline-none placeholder:text-nd-muted"
+              className="w-full bg-transparent text-foreground text-sm outline-none placeholder:text-nd-muted"
             />
           </div>
           <button

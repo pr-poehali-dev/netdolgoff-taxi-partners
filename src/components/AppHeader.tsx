@@ -10,11 +10,16 @@ export default function AppHeader() {
   return (
     <header className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-md z-40 bg-background/90 backdrop-blur-md border-b border-nd-border">
       <div className="flex items-center justify-between px-4 py-2.5">
-        <img
-          src={LOGO_URL}
-          alt="Нетдолгофф"
-          className="h-9 w-auto object-contain dark:brightness-0 dark:invert"
-        />
+        {theme === "light" ? (
+          <img src={LOGO_URL} alt="Нетдолгофф" className="h-9 w-auto object-contain" />
+        ) : (
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl bg-nd-yellow flex items-center justify-center">
+              <span className="text-nd-dark font-black text-lg">Н</span>
+            </div>
+            <span className="text-foreground font-black text-lg leading-none">Нетдолгофф</span>
+          </div>
+        )}
 
         <button
           onClick={toggleTheme}
