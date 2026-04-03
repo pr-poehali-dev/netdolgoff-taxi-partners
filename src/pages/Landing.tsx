@@ -404,7 +404,7 @@ export default function Landing() {
       {/* === СКРОЛЛ ПРИЛОЖЕНИЯ === */}
       <section id="app" className="py-16 bg-white/3 border-y border-white/5">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-black text-center mb-2">Всё в 2 нажатия</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-center mb-2">Всё в один клик</h2>
           <p className="text-white/50 text-center text-sm mb-12">Простое приложение — без заморочек и лишних шагов</p>
 
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 items-end justify-items-center">
