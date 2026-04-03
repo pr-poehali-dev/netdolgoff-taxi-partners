@@ -5,7 +5,7 @@ import Icon from "@/components/ui/icon";
 const LOGO_URL =
   "https://cdn.poehali.dev/projects/0e854e39-e393-4f2c-ac74-76b049136ae4/bucket/c16bc285-a108-436c-a4df-1df04c3121ce.png";
 
-type Step = "phone" | "code" | "name";
+type Step = "phone" | "code" | "name" | "promo";
 
 const formatPhone = (raw: string) => {
   const digits = raw.replace(/\D/g, "").slice(0, 11);
@@ -25,8 +25,12 @@ export default function AuthScreen() {
   const [rawPhone, setRawPhone] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
+  const [promoInput, setPromoInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const refCode = sessionStorage.getItem("nd-ref-code");
+  const refSource = sessionStorage.getItem("nd-ref-source") as "link" | "qr" | "promo" | null;
 
   const handlePhoneInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/\D/g, "");
@@ -59,12 +63,27 @@ export default function AuthScreen() {
     }, 800);
   };
 
-  const handleFinish = () => {
+  const handleNameNext = () => {
     if (name.trim().length < 2) {
       setError("Введите ваше имя");
       return;
     }
-    login({ name: name.trim(), phone });
+    if (refCode) {
+      handleFinish();
+    } else {
+      setStep("promo");
+    }
+  };
+
+  const handleFinish = (skipPromo = false) => {
+    const promo = !skipPromo && promoInput.trim() ? promoInput.trim().toUpperCase() : refCode || undefined;
+    const source = promoInput.trim() ? "promo" : refSource || undefined;
+    login({
+      name: name.trim(),
+      phone,
+      referredBy: promo,
+      referredBySource: source as "link" | "qr" | "promo" | undefined,
+    });
   };
 
   return (
@@ -192,8 +211,15 @@ export default function AuthScreen() {
             </div>
             {error && <p className="text-nd-red text-xs mt-2 flex items-center gap-1"><Icon name="AlertCircle" size={12} />{error}</p>}
 
+            {refCode && (
+              <div className="mt-4 flex items-center gap-2 bg-nd-yellow/10 border border-nd-yellow/30 rounded-xl px-3 py-2">
+                <Icon name="Link" size={14} className="text-nd-yellow-dark" />
+                <span className="text-nd-yellow-dark text-xs font-semibold">Реферальный код: {refCode}</span>
+              </div>
+            )}
+
             <button
-              onClick={handleFinish}
+              onClick={handleNameNext}
               disabled={name.trim().length < 2}
               className="w-full mt-5 py-4 rounded-2xl nd-gradient text-nd-dark font-bold text-base nd-yellow-glow hover-scale disabled:opacity-60 flex items-center justify-center gap-2 transition-all"
             >
@@ -202,14 +228,50 @@ export default function AuthScreen() {
             </button>
           </div>
         )}
-      </div>
 
-      {/* Footer */}
-      <div className="mt-6 text-center">
-        <p className="text-nd-muted text-xs leading-relaxed">
-          Нажимая «Получить код», вы соглашаетесь<br/>
-          с условиями партнёрской программы Нетдолгофф
-        </p>
+        {/* Step: promo — показывается только если не было реф.ссылки */}
+        {step === "promo" && (
+          <div className="animate-fade-in">
+            <div className="w-14 h-14 rounded-2xl bg-nd-card2 border border-nd-border flex items-center justify-center mb-4">
+              <Icon name="Tag" size={26} className="text-nd-yellow-dark" />
+            </div>
+            <h2 className="text-foreground text-xl font-black mb-1">Есть промокод?</h2>
+            <p className="text-nd-muted text-sm mb-6">Введите промокод водителя, который вас пригласил, или пропустите</p>
+
+            <label className="block text-nd-muted text-xs font-semibold uppercase tracking-wider mb-2">
+              Промокод
+            </label>
+            <div className="flex items-center gap-3 bg-nd-card2 border-2 border-nd-border focus-within:border-nd-yellow rounded-2xl px-4 py-3 transition-all">
+              <Icon name="Hash" size={18} className="text-nd-muted flex-shrink-0" />
+              <input
+                type="text"
+                value={promoInput}
+                onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                placeholder="ND-ABC1234"
+                className="flex-1 bg-transparent text-foreground text-base outline-none placeholder:text-nd-border font-medium tracking-widest"
+                autoFocus
+              />
+            </div>
+
+            <button
+              onClick={() => handleFinish(false)}
+              className="w-full mt-5 py-4 rounded-2xl nd-gradient text-nd-dark font-bold text-base nd-yellow-glow hover-scale flex items-center justify-center gap-2 transition-all"
+            >
+              {promoInput.trim() ? (
+                <>Применить промокод<Icon name="Check" size={18} /></>
+              ) : (
+                <>Начать зарабатывать<Icon name="Rocket" size={18} /></>
+              )}
+            </button>
+
+            <button
+              onClick={() => handleFinish(true)}
+              className="w-full mt-3 py-3 rounded-2xl text-nd-muted text-sm font-medium hover:text-foreground transition-colors"
+            >
+              Пропустить
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import { useAuth } from "@/contexts/AuthContext";
 
-const PROMO = "TAXI-AP2847";
-const LINK = "https://netdolgoff.ru/ref/TAXI-AP2847";
+const BASE_URL = "https://netdolgoff.ru";
 
 type LeadStatus = "thinking" | "signed" | "declined" | "no_match";
 
@@ -53,6 +53,10 @@ const statusCounts = leads.reduce((acc, l) => {
 const conversionRate = Math.round((statusCounts.signed || 0) / leads.length * 100);
 
 export default function ReferralPage() {
+  const { user } = useAuth();
+  const PROMO = user?.promo ?? "ND-XXXXX";
+  const LINK = `${BASE_URL}/ref/${PROMO}`;
+
   const [copied, setCopied] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<LeadStatus | "all">("all");
   const [showLeads, setShowLeads] = useState(false);
@@ -303,6 +307,7 @@ export default function ReferralPage() {
           <div className="bg-nd-yellow-light border border-nd-yellow/40 rounded-xl px-5 py-2">
             <p className="text-nd-yellow-dark text-center font-mono font-black text-sm">{PROMO}</p>
           </div>
+          <p className="text-nd-muted text-[11px] mt-2 text-center">{LINK}</p>
         </div>
       </div>
 
