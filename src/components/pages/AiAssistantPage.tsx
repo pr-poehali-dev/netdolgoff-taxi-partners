@@ -2,17 +2,27 @@ import { useState, useRef, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 type Message = { id: number; role: "user" | "assistant"; text: string; time: string; };
+type Mode = "assistant" | "trainer";
 
-const quickQuestions = [
+const quickQuestionsAssistant = [
   "Что такое банкротство?",
   "Сколько стоит?",
   "Заберут ли квартиру?",
   "Сколько длится?",
-  "Как убедить пассажира?",
   "Мой заработок?",
+  "Когда выведут деньги?",
 ];
 
-// Расширенная база знаний ИИ
+const quickQuestionsTrainer = [
+  "Как начать разговор?",
+  "Пассажир говорит «дорого»",
+  "Пассажир боится последствий",
+  "Пассажир сомневается",
+  "Пассажир говорит «подумаю»",
+  "Разыграй диалог",
+];
+
+// === БАЗА ЗНАНИЙ — режим ассистента ===
 const knowledgeBase: Array<{ keywords: string[]; answer: string }> = [
   {
     keywords: ["что такое банкротство", "банкротство это", "что такое", "объясни банкротство"],
@@ -92,27 +102,71 @@ const knowledgeBase: Array<{ keywords: string[]; answer: string }> = [
   },
 ];
 
-const ESCALATE_KEYWORDS = ["сложный", "не знаю", "нет в базе", "специфичн", "юрист", "индивидуально", "уточнить у юриста"];
+// === СКРИПТЫ ПРОДАЖ — режим тренера ===
+const salesScripts: Array<{ keywords: string[]; answer: string }> = [
+  {
+    keywords: ["как начать разговор", "начать", "открыть разговор", "с чего начать", "первая фраза"],
+    answer: "🎯 КАК НАЧАТЬ РАЗГОВОР С ПАССАЖИРОМ\n\nЛучший способ — через сочувствие и открытый вопрос:\n\n──────────────────\n👤 ВЫ:\n«Сейчас у многих финансовые трудности — кредиты, займы... Вам знакома такая ситуация?»\n\n──────────────────\n🔑 Почему это работает:\n• Вы не «продаёте» — вы сочувствуете\n• Вопрос открытый — пассажир сам начинает говорить\n• Если долгов нет — просто смените тему, без потери лица\n\n──────────────────\n💡 Другие варианты старта:\n• «Слышали про новый закон о списании долгов?»\n• «Один мой пассажир недавно избавился от кредитов законно — интересно?»\n• «У вас нет знакомых с долгами? Знаю, кто помогает...»",
+  },
+  {
+    keywords: ["дорого", "говорит дорого", "пассажир говорит дорого", "слишком дорого", "не могу позволить"],
+    answer: "💬 ВОЗРАЖЕНИЕ: «ЭТО ДОРОГО»\n\n──────────────────\n👤 ПАССАЖИР: «Это же дорого — 80 000 ₽...»\n\n🗣️ ВЫ:\n«Понимаю. Но давайте посчитаем: если у вас долг 500 000 ₽ — вы платите 80 000 и избавляетесь от 500 000. Это выгодно на 420 000 ₽. Причём есть рассрочка — сначала совсем небольшой первый платёж.»\n\n──────────────────\n🗣️ Если продолжает сомневаться:\n«Консультация совершенно бесплатная. Просто узнайте — подходит ли вам это. Ни к чему не обязывает.»\n\n──────────────────\n🔑 Ключевые аргументы против «дорого»:\n• Рассрочка — не нужно платить всё сразу\n• Соотношение: платишь 80к → списываешь 300–700к\n• Консультация бесплатная и без обязательств",
+  },
+  {
+    keywords: ["боится последствий", "страх", "боится", "последствия", "что будет после"],
+    answer: "💬 ВОЗРАЖЕНИЕ: «БОЮСЬ ПОСЛЕДСТВИЙ»\n\n──────────────────\n👤 ПАССАЖИР: «Я боюсь, что потом не смогу брать кредиты / уволят / что-то случится...»\n\n🗣️ ВЫ:\n«Хороший вопрос. На самом деле последствия минимальные. Работать можно — для таксистов вообще нет ограничений. Открыть счёт в банке — можно сразу. Единственное — 5 лет нужно сообщать о банкротстве при новом кредите. Но вы и так уже в долгах...»\n\n──────────────────\n🗣️ Закрытие:\n«Многие боятся, пока не узнают детали. На консультации юрист расскажет всё именно под вашу ситуацию — бесплатно.»\n\n──────────────────\n🔑 Факты для снятия страхов:\n• Работу не потеряете\n• Квартира (единственная) — не заберут\n• За рубеж можно выехать после процедуры\n• Кредитная история восстанавливается",
+  },
+  {
+    keywords: ["сомневается", "не уверен", "думает", "колеблется", "нерешительный"],
+    answer: "💬 РАБОТА С СОМНЕНИЕМ\n\n──────────────────\n👤 ПАССАЖИР: «Не знаю... надо подумать...»\n\n🗣️ ВЫ:\n«Конечно, это серьёзное решение. Но пока вы думаете — долг растёт. Коллекторы звонят. Нервы тратятся. А консультация занимает 30 минут и ничего не стоит. Что теряете, если просто узнаете?»\n\n──────────────────\n🗣️ Если ещё сомневается:\n«Вот моя ссылка — там можно оставить номер, юрист сам перезвонит. Вас ни к чему не обязывают.»\n\n──────────────────\n🔑 Техника «что теряете»:\nЗаставьте пассажира думать не о риске действия, а о риске БЕЗДЕЙСТВИЯ:\n• Долг продолжает расти\n• Коллекторы продолжают звонить\n• Стресс продолжается\n\nДействие бесплатно и безопасно — бездействие дорого.",
+  },
+  {
+    keywords: ["подумаю", "перезвоню", "потом", "не сейчас", "позже"],
+    answer: "💬 ВОЗРАЖЕНИЕ: «Я ПОДУМАЮ»\n\n──────────────────\n👤 ПАССАЖИР: «Спасибо, я подумаю...»\n\n🗣️ ВЫ:\n«Конечно! Я пришлю вам ссылку прямо сейчас — там вся информация и контакты. Долго не займёт.»\n[Отправляете реф. ссылку в мессенджер / показываете QR]\n\n──────────────────\n🗣️ Если нет возможности передать ссылку:\n«Запомните: Нетдолгофф, телефон 8-800-707-36-99. Звонок бесплатный. Скажите, что от водителя — получите приоритетную запись.»\n\n──────────────────\n⚡ Правило «горячего момента»:\n90% людей, которые «подумают» — не возвращаются сами. Поэтому СЕЙЧАС передайте ссылку или промокод — это главное действие.",
+  },
+  {
+    keywords: ["разыграй диалог", "сыграй", "потренируемся", "тренировка диалога", "пример разговора", "диалог"],
+    answer: "🎭 ТРЕНИРОВОЧНЫЙ ДИАЛОГ\n\nЯ буду пассажиром, вы — водителем. Вот типичный сценарий:\n\n──────────────────\n🚕 [Пассажир садится в машину, вздыхает]\n\n👤 ПАССАЖИР (я):\n«Устал как собака... Ещё и коллекторы с утра звонили...»\n\n──────────────────\n✅ ВАШ ответ должен быть:\n«О, понимаю. Сейчас многие в такой ситуации. Кстати, есть законный способ от этого избавиться — знакомый воспользовался, списал 400 000 долга. Хотите расскажу?»\n\n──────────────────\n🔄 Если пассажир заинтересовался:\n«Это банкротство по ФЗ-127. Компания называется Нетдолгофф. Консультация бесплатная. Вот моя ссылка — они перезвонят и всё объяснят.»\n\n──────────────────\n💡 Хотите потренироваться? Напишите мне как пассажир — я буду отвечать возражениями, а вы учитесь их отрабатывать!",
+  },
+  {
+    keywords: ["нет долгов", "у меня нет долгов", "мне не нужно", "у меня всё хорошо"],
+    answer: "💡 ПАССАЖИР БЕЗ ДОЛГОВ — ТОЖЕ ВОЗМОЖНОСТЬ!\n\n──────────────────\n👤 ПАССАЖИР: «У меня нет долгов, мне не нужно.»\n\n🗣️ ВЫ:\n«Отлично! А у знакомых, родственников — никто не жалуется на кредиты? Если порекомендуете — я делюсь бонусом: вам 300 рублей только за регистрацию по вашей ссылке, а если они заключат договор — значительно больше.»\n\n──────────────────\n🔑 Стратегия переключения:\n• Пассажир без долгов = потенциальный партнёр\n• Предложите ему тоже стать реферралом\n• Или он знает людей с долгами\n\n«Сарафанное радио работает лучше рекламы!»",
+  },
+  {
+    keywords: ["не доверяю", "мошенники", "обман", "развод", "не верю"],
+    answer: "💬 ВОЗРАЖЕНИЕ: «ЭТО РАЗВОД / НЕ ДОВЕРЯЮ»\n\n──────────────────\n👤 ПАССАЖИР: «Да ладно, это всё мошенники...»\n\n🗣️ ВЫ:\n«Понимаю скептицизм — в интернете много мусора. Но Нетдолгофф работает с 2015 года, официально зарегистрированы, тысячи клиентов. Это не микрозайм — это юридическая фирма по федеральному закону.\n\nДаже если сомневаетесь — консультация бесплатная. Послушайте юриста, задайте вопросы. Если что-то смутит — просто уйдёте.»\n\n──────────────────\n🔑 Аргументы доверия:\n• С 2015 года на рынке\n• Работают по ФЗ №127\n• Бесплатная консультация без обязательств\n• Оплата только по договору, без предоплаты",
+  },
+];
 
-const getResponse = (msg: string): { text: string; escalate?: boolean } => {
+const getResponse = (msg: string, mode: Mode): { text: string; escalate?: boolean } => {
   const lower = msg.toLowerCase();
+  const base = mode === "trainer" ? salesScripts : knowledgeBase;
 
-  // Прямой поиск по базе знаний
-  for (const item of knowledgeBase) {
+  for (const item of base) {
     if (item.keywords.some(kw => lower.includes(kw.toLowerCase()))) {
       return { text: item.answer };
     }
   }
 
-  // Общие темы
+  // Если в режиме тренера — попробовать базу знаний как запасной вариант
+  if (mode === "trainer") {
+    for (const item of knowledgeBase) {
+      if (item.keywords.some(kw => lower.includes(kw.toLowerCase()))) {
+        return { text: "📚 Это из базы знаний (переключитесь в режим Ассистента для полных ответов):\n\n" + item.answer };
+      }
+    }
+    return {
+      text: "🎯 Опишите ситуацию подробнее — например:\n• «Пассажир говорит дорого»\n• «Пассажир боится последствий»\n• «Как начать разговор?»\n• «Разыграй диалог»\n\nЯ дам конкретный скрипт для этой ситуации.",
+    };
+  }
+
   if (lower.includes("привет") || lower.includes("здравст") || lower.includes("добр")) {
     return { text: "Привет! Я ИИ-ассистент НЕТДОЛГОФФ. Знаю всё о банкротстве физических лиц и нашей партнёрской программе. Задайте любой вопрос — отвечу быстро!" };
   }
   if (lower.includes("спасибо") || lower.includes("благодар")) {
-    return { text: "Пожалуйста! Если появятся ещё вопросы — всегда готов помочь. Удачных поездок и много клиентов! 🚕" };
+    return { text: "Пожалуйста! Если появятся ещё вопросы — всегда готов помочь. Удачных поездок и много клиентов!" };
   }
 
-  // Эскалация на куратора
   return {
     text: "По этому вопросу у меня нет точного ответа — лучше уточнить у живого юриста-куратора. Он знает все нюансы и ответит в течение нескольких минут.\n\nПерейдите в раздел «Чат с куратором» 👆",
     escalate: true,
@@ -121,27 +175,40 @@ const getResponse = (msg: string): { text: string; escalate?: boolean } => {
 
 const now = () => new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
 
+const welcomeMessages: Record<Mode, string> = {
+  assistant: "Привет! Я ИИ-ассистент НЕТДОЛГОФФ 🤖\n\nЗнаю всё о банкротстве физических лиц по ФЗ-127, тарифах компании и партнёрской программе. Если не смогу ответить — переключу на живого юриста.",
+  trainer: "Привет! Я твой личный тренер по продажам 🎯\n\nОбучу скриптам для разговора с пассажирами, помогу отработать возражения и разыграю диалоги для практики.\n\nВыбери ситуацию ниже или опиши свой случай — дам готовый скрипт!",
+};
+
 export default function AiAssistantPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, role: "assistant", text: "Привет! Я ИИ-ассистент НЕТДОЛГОФФ 🤖\n\nЗнаю всё о банкротстве физических лиц по ФЗ-127, тарифах компании и партнёрской программе. Если не смогу ответить — переключу на живого юриста.", time: now() },
-  ]);
+  const [mode, setMode] = useState<Mode>("assistant");
+  const [messagesByMode, setMessagesByMode] = useState<Record<Mode, Message[]>>({
+    assistant: [{ id: 1, role: "assistant", text: welcomeMessages.assistant, time: now() }],
+    trainer: [{ id: 1, role: "assistant", text: welcomeMessages.trainer, time: now() }],
+  });
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, isTyping]);
+  const messages = messagesByMode[mode];
+
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, isTyping, mode]);
 
   const sendMessage = (text: string) => {
     if (!text.trim()) return;
-    setMessages((prev) => [...prev, { id: Date.now(), role: "user", text, time: now() }]);
+    const userMsg: Message = { id: Date.now(), role: "user", text, time: now() };
+    setMessagesByMode(prev => ({ ...prev, [mode]: [...prev[mode], userMsg] }));
     setInput("");
     setIsTyping(true);
     setTimeout(() => {
       setIsTyping(false);
-      const response = getResponse(text);
-      setMessages((prev) => [...prev, { id: Date.now() + 1, role: "assistant", text: response.text, time: now() }]);
-    }, 800 + Math.random() * 600);
+      const response = getResponse(text, mode);
+      const assistantMsg: Message = { id: Date.now() + 1, role: "assistant", text: response.text, time: now() };
+      setMessagesByMode(prev => ({ ...prev, [mode]: [...prev[mode], assistantMsg] }));
+    }, 800 + Math.random() * 700);
   };
+
+  const quickQuestions = mode === "assistant" ? quickQuestionsAssistant : quickQuestionsTrainer;
 
   return (
     <div className="flex flex-col h-screen">
@@ -149,17 +216,53 @@ export default function AiAssistantPage() {
       <div className="px-4 pt-5 pb-4 nd-gradient flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-nd-dark flex items-center justify-center">
-            <Icon name="Bot" size={20} className="text-nd-yellow" />
+            <Icon name={mode === "trainer" ? "GraduationCap" : "Bot"} size={20} className="text-nd-yellow" />
           </div>
-          <div>
-            <p className="text-nd-dark font-bold">ИИ-ассистент</p>
+          <div className="flex-1">
+            <p className="text-nd-dark font-bold">
+              {mode === "assistant" ? "ИИ-ассистент" : "Бизнес-тренер"}
+            </p>
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-nd-green animate-pulse" />
-              <p className="text-nd-dark/60 text-xs">Онлайн · знает всё о банкротстве</p>
+              <p className="text-nd-dark/60 text-xs">
+                {mode === "assistant" ? "Знает всё о банкротстве" : "Тренер по продажам и скриптам"}
+              </p>
             </div>
           </div>
         </div>
+
+        {/* Переключатель режимов */}
+        <div className="mt-3 bg-nd-dark/20 rounded-xl p-1 flex gap-1">
+          <button
+            onClick={() => setMode("assistant")}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+              mode === "assistant" ? "bg-nd-dark text-nd-yellow" : "text-nd-dark/70"
+            }`}
+          >
+            <Icon name="Bot" size={13} />
+            Ассистент
+          </button>
+          <button
+            onClick={() => setMode("trainer")}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+              mode === "trainer" ? "bg-nd-dark text-nd-yellow" : "text-nd-dark/70"
+            }`}
+          >
+            <Icon name="GraduationCap" size={13} />
+            Тренер по продажам
+          </button>
+        </div>
       </div>
+
+      {/* Mode description banner */}
+      {mode === "trainer" && (
+        <div className="mx-4 mt-3 mb-1 bg-nd-yellow-light border border-nd-yellow/40 rounded-xl px-4 py-2.5 flex items-start gap-2.5 flex-shrink-0">
+          <Icon name="Lightbulb" size={15} className="text-nd-yellow-dark mt-0.5 flex-shrink-0" />
+          <p className="text-nd-yellow-dark text-xs leading-relaxed">
+            Режим тренера — скрипты продаж, отработка возражений и тренировочные диалоги. Задавайте ситуацию — получайте готовую речь.
+          </p>
+        </div>
+      )}
 
       {/* Quick questions */}
       <div className="px-4 py-3 border-b border-nd-border bg-nd-card flex-shrink-0">
@@ -182,10 +285,10 @@ export default function AiAssistantPage() {
           <div key={msg.id} className={`flex gap-2 animate-slide-up ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
             {msg.role === "assistant" && (
               <div className="w-7 h-7 rounded-full bg-nd-dark flex items-center justify-center flex-shrink-0 mt-1">
-                <Icon name="Bot" size={13} className="text-nd-yellow" />
+                <Icon name={mode === "trainer" ? "GraduationCap" : "Bot"} size={13} className="text-nd-yellow" />
               </div>
             )}
-            <div className={`max-w-[80%] flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
+            <div className={`max-w-[82%] flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
               <div className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-line ${
                 msg.role === "user"
                   ? "nd-gradient text-nd-dark rounded-tr-sm"
@@ -200,7 +303,7 @@ export default function AiAssistantPage() {
         {isTyping && (
           <div className="flex gap-2 animate-fade-in">
             <div className="w-7 h-7 rounded-full bg-nd-dark flex items-center justify-center flex-shrink-0 mt-1">
-              <Icon name="Bot" size={13} className="text-nd-yellow" />
+              <Icon name={mode === "trainer" ? "GraduationCap" : "Bot"} size={13} className="text-nd-yellow" />
             </div>
             <div className="bg-nd-card nd-card-glow rounded-2xl rounded-tl-sm px-4 py-3">
               <div className="flex gap-1 items-center">
@@ -223,7 +326,7 @@ export default function AiAssistantPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              placeholder="Задайте вопрос о банкротстве..."
+              placeholder={mode === "assistant" ? "Задайте вопрос о банкротстве..." : "Опишите ситуацию с пассажиром..."}
               className="w-full bg-transparent text-foreground text-sm outline-none placeholder:text-nd-muted"
             />
           </div>

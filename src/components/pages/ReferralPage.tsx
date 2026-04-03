@@ -227,6 +227,66 @@ export default function ReferralPage() {
         </div>
       )}
 
+      {/* === БОНУСНЫЕ БЛОКИ === */}
+      <div className="px-4 mt-4 mb-2 grid grid-cols-2 gap-2">
+        {/* Бонус 300р за регистрацию */}
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-3 border border-nd-yellow/30">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <div className="w-6 h-6 rounded-lg bg-nd-yellow-light flex items-center justify-center">
+              <Icon name="Gift" size={13} className="text-nd-yellow-dark" />
+            </div>
+            <span className="text-nd-yellow-dark text-xs font-bold">+300 ₽</span>
+          </div>
+          <p className="text-foreground font-semibold text-xs leading-tight">За каждую регистрацию</p>
+          <p className="text-nd-muted text-[11px] mt-0.5 leading-tight">Автоматически — когда кто-то регистрируется по вашей ссылке, промокоду или QR</p>
+        </div>
+
+        {/* Бонус 50к за 3 клиентов */}
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-3 border border-nd-green/30">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <div className="w-6 h-6 rounded-lg bg-nd-green/10 flex items-center justify-center">
+              <Icon name="Trophy" size={13} className="text-nd-green" />
+            </div>
+            <span className="text-nd-green text-xs font-bold">+50 000 ₽</span>
+          </div>
+          <p className="text-foreground font-semibold text-xs leading-tight">За 3 клиента в месяц</p>
+          <p className="text-nd-muted text-[11px] mt-0.5 leading-tight">Автоматически — когда 3-й договор за месяц подписан. Долг каждого от 300 000 ₽</p>
+        </div>
+      </div>
+
+      {/* Прогресс к бонусу 50к */}
+      <div className="px-4 mb-4">
+        <div className="bg-nd-card nd-card-glow rounded-2xl p-3">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Icon name="Trophy" size={14} className="text-nd-yellow-dark" />
+              <span className="text-foreground text-sm font-semibold">Бонус месяца</span>
+            </div>
+            <span className="text-nd-muted text-xs">апрель 2026</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {[1, 2, 3].map((n) => {
+              const filled = n <= (statusCounts.signed || 0);
+              return (
+                <div key={n} className="flex-1">
+                  <div className={`h-2 rounded-full transition-all ${filled ? "bg-nd-green" : "bg-nd-card2 border border-nd-border"}`} />
+                  <p className={`text-center text-[10px] mt-1 font-semibold ${filled ? "text-nd-green" : "text-nd-muted"}`}>{n}</p>
+                </div>
+              );
+            })}
+            <div className="flex-shrink-0 text-right">
+              <p className="text-nd-green font-black text-sm">50 000 ₽</p>
+              <p className="text-nd-muted text-[10px]">цель</p>
+            </div>
+          </div>
+          <p className="text-nd-muted text-[11px] mt-2">
+            {(statusCounts.signed || 0) >= 3
+              ? "🏆 Бонус начислен! Отличная работа!"
+              : `Осталось ${3 - Math.min(statusCounts.signed || 0, 3)} договора до бонуса 50 000 ₽`}
+          </p>
+        </div>
+      </div>
+
       {/* QR Code */}
       <div className="px-4 mb-4">
         <div className="bg-nd-card nd-card-glow rounded-2xl p-6 flex flex-col items-center">
