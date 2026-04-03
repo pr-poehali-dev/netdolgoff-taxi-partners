@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const PHONE = "8 800 707-36-99";
@@ -42,12 +43,12 @@ const appScreens = [
 const faqs = [
   { q: "Сколько времени нужно тратить?", a: "Ноль дополнительного времени. Вы упоминаете компанию в разговоре с пассажиром — это занимает 20 секунд. Скрипты уже готовы в приложении." },
   { q: "Когда придут деньги на карту?", a: "После того как ваш пассажир подписал договор с Нетдолгофф. Деньги на карту в течение 1–3 рабочих дней через раздел «Финансы» в приложении." },
-  { q: "Что если пассажир отказался?", a: "Вы всё равно получите +300 ₽ за его регистрацию в приложении. Следующий пассажир может оказаться более подходящим." },
   { q: "Нужно ли платить за участие?", a: "Нет. Регистрация и участие абсолютно бесплатны." },
   { q: "Можно ли приглашать других водителей?", a: "Да! За каждого водителя, который зарегистрируется по вашей ссылке, вы получаете 300 ₽ автоматически." },
 ];
 
 export default function Landing() {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formPhone, setFormPhone] = useState("");
   const [formName, setFormName] = useState("");
@@ -106,7 +107,7 @@ export default function Landing() {
               </div>
               <h1 className="text-4xl md:text-5xl font-black leading-tight mb-5">
                 Зарабатывай<br />
-                <span className="text-[#f5c842]">до 65 000 ₽</span><br />
+                <span className="text-[#f5c842]">до 85 000 ₽</span><br />
                 в месяц —<br />
                 просто разговаривая
               </h1>
@@ -114,11 +115,11 @@ export default function Landing() {
                 Рекомендуйте пассажирам списание долгов через Нетдолгофф. Бонус зачисляется автоматически — прямо на карту.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="#registration"
+                <button onClick={() => navigate("/")}
                   className="bg-[#f5c842] text-[#0f0f0f] font-black text-base px-6 py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#f5c842]/90 transition-all">
                   <Icon name="UserPlus" size={18} />
                   Хочу участвовать
-                </a>
+                </button>
                 <a href="#calculator"
                   className="border border-white/20 text-white font-semibold text-sm px-6 py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-white/5 transition-all">
                   <Icon name="Calculator" size={16} />
@@ -148,7 +149,7 @@ export default function Landing() {
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-6 text-center">
           {[
             { val: "2015", label: "Год основания" },
-            { val: "95%", label: "Работает по всей России" },
+            { val: "100+", label: "Профессиональных юристов" },
             { val: "10 000+", label: "Успешных банкротств" },
           ].map((s) => (
             <div key={s.val}>
@@ -373,11 +374,11 @@ export default function Landing() {
                 </div>
                 <p className="text-white font-black text-4xl">{totalBonus.toLocaleString("ru")} ₽</p>
               </div>
-              <a href="#registration"
+              <button onClick={() => navigate("/")}
                 className="mt-4 w-full bg-[#f5c842] text-[#0f0f0f] font-black py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#f5c842]/90 transition-all">
                 <Icon name="UserPlus" size={18} />
                 Начать зарабатывать
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -518,7 +519,9 @@ export default function Landing() {
           <div className="md:w-1/2">
             <img src={LOGO} alt="Нетдолгофф" className="h-14 w-auto object-contain mb-6" />
             <p className="text-white/60 leading-relaxed mb-5">
-              Юридический центр «Нетдолгофф» с 2015 года помогает людям законно избавиться от долгов по ФЗ №127 «О несостоятельности». Более 10 000 успешных банкротств по всей России.
+              Юридический центр{" "}
+              <a href="https://netdolgoff.ru" target="_blank" rel="noopener noreferrer" className="text-[#f5c842] hover:underline">«Нетдолгофф»</a>
+              {" "}с 2015 года помогает людям законно избавиться от долгов по ФЗ №127 «О несостоятельности». Более 10 000 успешных банкротств по всей России.
             </p>
             <ul className="space-y-2">
               {["Консультация — всегда бесплатно","Без предоплат и скрытых платежей","Коллекторы, документы, суды — берём на себя","Единственное жильё не продаётся"].map(item => (
@@ -534,7 +537,7 @@ export default function Landing() {
           <div className="md:w-1/2 grid grid-cols-2 gap-4">
             {[
               { val: "2015", label: "Год основания", color: "text-[#f5c842]" },
-              { val: "95%", label: "Работает по всей России", color: "text-[#22c55e]" },
+              { val: "100+", label: "Профессиональных юристов", color: "text-[#22c55e]" },
               { val: "10 000+", label: "Успешных банкротств", color: "text-[#f5c842]" },
               { val: "8 800", label: "Бесплатный звонок", color: "text-[#22c55e]" },
             ].map(s => (
@@ -568,36 +571,18 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* === ФОРМА === */}
+      {/* === РЕГИСТРАЦИЯ === */}
       <section id="registration" className="py-16 bg-gradient-to-b from-[#f5c842]/5 to-transparent">
         <div className="max-w-md mx-auto px-4 text-center">
           <img src={LOGO} alt="Нетдолгофф" className="h-12 w-auto object-contain mx-auto mb-6" />
           <h2 className="text-2xl md:text-3xl font-black mb-3">Хотите участвовать?</h2>
-          <p className="text-white/50 text-sm mb-8">Оставьте контакт — свяжемся и поможем зарегистрироваться за 5 минут</p>
-          {submitted ? (
-            <div className="bg-[#22c55e]/10 border border-[#22c55e]/30 rounded-2xl p-8">
-              <div className="w-16 h-16 bg-[#22c55e]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Icon name="CheckCircle" size={32} className="text-[#22c55e]" />
-              </div>
-              <p className="font-black text-xl mb-2">Отлично!</p>
-              <p className="text-white/60 text-sm">Наш менеджер свяжется с вами в течение 30 минут в рабочее время.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <input type="text" value={formName} onChange={e => setFormName(e.target.value)}
-                placeholder="Ваше имя"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white placeholder:text-white/30 outline-none focus:border-[#f5c842]/50 transition-all text-sm" />
-              <input type="tel" value={formPhone} onChange={e => setFormPhone(e.target.value)}
-                placeholder="Телефон +7..." required
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white placeholder:text-white/30 outline-none focus:border-[#f5c842]/50 transition-all text-sm" />
-              <button type="submit"
-                className="w-full bg-[#f5c842] text-[#0f0f0f] font-black py-4 rounded-2xl text-base hover:bg-[#f5c842]/90 transition-all flex items-center justify-center gap-2">
-                <Icon name="ArrowRight" size={18} />
-                Оставить заявку
-              </button>
-              <p className="text-white/20 text-xs">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
-            </form>
-          )}
+          <p className="text-white/50 text-sm mb-8">Зарегистрируйтесь прямо сейчас — это занимает 2 минуты</p>
+          <button onClick={() => navigate("/")}
+            className="w-full bg-[#f5c842] text-[#0f0f0f] font-black py-5 rounded-2xl text-lg hover:bg-[#f5c842]/90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-[#f5c842]/20">
+            <Icon name="UserPlus" size={22} />
+            Зарегистрироваться бесплатно
+          </button>
+          <p className="text-white/20 text-xs mt-4">Регистрация бесплатна. Данные защищены.</p>
         </div>
       </section>
 
