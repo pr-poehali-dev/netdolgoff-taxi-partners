@@ -148,7 +148,7 @@ export default function Landing() {
         <div className="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-6 text-center">
           {[
             { val: "2015", label: "Год основания" },
-            { val: "95%", label: "Долгов списывается" },
+            { val: "95%", label: "Работает по всей России" },
             { val: "10 000+", label: "Успешных банкротств" },
           ].map((s) => (
             <div key={s.val}>
@@ -406,47 +406,48 @@ export default function Landing() {
           <h2 className="text-2xl md:text-3xl font-black text-center mb-2">Всё в 2 нажатия</h2>
           <p className="text-white/50 text-center text-sm mb-12">Простое приложение — без заморочек и лишних шагов</p>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {appScreens.map((screen) => (
-              <div key={screen.title} className="bg-[#1a1a1a] border border-white/10 rounded-3xl overflow-hidden hover:border-[#f5c842]/30 transition-all">
-                {/* Макет экрана телефона */}
-                <div className="bg-[#0f0f0f] px-4 pt-5 pb-4 border-b border-white/5">
-                  <div className="bg-[#1a1a1a] rounded-2xl p-4 min-h-[120px] flex flex-col justify-between">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-6 h-6 bg-[#f5c842] rounded-lg flex items-center justify-center">
-                        <Icon name={screen.icon} size={12} className="text-[#0f0f0f]" />
-                      </div>
-                      <p className="text-white text-xs font-bold">{screen.title}</p>
-                    </div>
-                    {/* Имитация контента */}
-                    <div className="space-y-1.5">
-                      <div className="h-2 bg-white/10 rounded-full w-full" />
-                      <div className="h-2 bg-white/10 rounded-full w-4/5" />
-                      <div className="h-2 bg-[#f5c842]/30 rounded-full w-3/5" />
-                    </div>
-                    <div className="mt-3 bg-[#f5c842]/20 rounded-xl px-3 py-2 flex items-center justify-center gap-1">
-                      <div className="w-2 h-2 bg-[#f5c842] rounded-full" />
-                      <div className="h-1.5 bg-[#f5c842]/60 rounded-full w-16" />
-                    </div>
-                  </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 items-end justify-items-center">
+            {[
+              {
+                img: "https://cdn.poehali.dev/projects/0e854e39-e393-4f2c-ac74-76b049136ae4/bucket/ae8c1323-d734-453f-aed5-823562f8db7d.png",
+                title: "Главный экран",
+                desc: "Баланс, статистика и шкала бонусов",
+              },
+              {
+                img: "https://cdn.poehali.dev/projects/0e854e39-e393-4f2c-ac74-76b049136ae4/bucket/61326f23-0c1c-4532-b7bf-042324a21c37.png",
+                title: "Мои рефералы",
+                desc: "Статус каждого клиента в реальном времени",
+              },
+              {
+                img: "https://cdn.poehali.dev/projects/0e854e39-e393-4f2c-ac74-76b049136ae4/bucket/c9607075-6845-44ab-9e2d-08a665f66a13.png",
+                title: "Финансы",
+                desc: "История начислений и вывод на карту",
+              },
+              {
+                img: "https://cdn.poehali.dev/projects/0e854e39-e393-4f2c-ac74-76b049136ae4/bucket/fd24386e-f549-49ce-8d9c-653961c1a66c.png",
+                title: "QR и промокод",
+                desc: "Показываете пассажиру или называете устно",
+              },
+            ].map((screen, i) => (
+              <div key={i} className="flex flex-col items-center gap-3 w-full max-w-[200px]">
+                <div className="relative w-full">
+                  <div className="absolute -inset-2 bg-[#f5c842]/10 rounded-3xl blur-xl pointer-events-none" />
+                  <img
+                    src={screen.img}
+                    alt={screen.title}
+                    className="relative w-full rounded-3xl border border-white/10 shadow-2xl object-cover"
+                    style={{ aspectRatio: "9/19" }}
+                  />
                 </div>
-                <div className="p-4">
-                  <p className="text-white font-bold text-sm mb-2">{screen.title}</p>
-                  <p className="text-white/50 text-xs mb-3 leading-relaxed">{screen.desc}</p>
-                  <div className="space-y-1.5">
-                    {screen.steps.map((step, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <div className="w-4 h-4 rounded-full bg-[#f5c842] text-[#0f0f0f] text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5">
-                          {i + 1}
-                        </div>
-                        <p className="text-white/60 text-xs">{step}</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className="text-center">
+                  <p className="text-white font-bold text-sm">{screen.title}</p>
+                  <p className="text-white/50 text-xs mt-1">{screen.desc}</p>
                 </div>
               </div>
             ))}
           </div>
+
+
         </div>
       </section>
 
@@ -533,7 +534,7 @@ export default function Landing() {
           <div className="md:w-1/2 grid grid-cols-2 gap-4">
             {[
               { val: "2015", label: "Год основания", color: "text-[#f5c842]" },
-              { val: "95%", label: "Долгов списывается", color: "text-[#22c55e]" },
+              { val: "95%", label: "Работает по всей России", color: "text-[#22c55e]" },
               { val: "10 000+", label: "Успешных банкротств", color: "text-[#f5c842]" },
               { val: "8 800", label: "Бесплатный звонок", color: "text-[#22c55e]" },
             ].map(s => (
